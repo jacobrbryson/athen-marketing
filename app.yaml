@@ -1,0 +1,28 @@
+runtime: nodejs20
+
+# Instance Class: F1 is typically the free tier for GAE Standard, good for low traffic.
+instance_class: F1
+
+# Entrypoint: Not strictly necessary for a purely static Angular build, but GAE
+# requires a runtime, and the handlers below manage all traffic.
+
+handlers:
+  # 1. Static Asset Handler with Caching
+  # This handler matches all your build artifacts (JS, CSS, images, fonts).
+  # We set a long Cache-Control to ensure optimal performance and lower costs.
+  - url: /(.*\.(css|js|json|png|jpg|gif|svg|ico|eot|ttf|woff|woff2|map))$
+    static_files: dist/marketing/browser/\1
+    upload: dist/marketing/browser/(.*)
+    secure: always
+    http_headers:
+      # Aggressive caching for files that change their names on every build (content hash)
+      Cache-Control: 'public, max-age=31536000' # 1 year
+
+  # 2. Single Page Application (SPA) Fallback Handler (CRITICAL)
+  # This is the most important part: any request that didn't match a static file
+  # (e.g., a deep link like /dashboard or /about-us) is routed directly to index.html.
+  # The Angular router then takes over to load the correct view.
+  - url: /.*
+    static_files: dist/marketing/browser/index.html
+    upload: dist/marketing/browser/index\.html
+    secure: always

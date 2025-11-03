@@ -1,0 +1,26 @@
+<div
+  id="kid-content"
+  role="tabpanel"
+  aria-labelledby="kid-tab"
+  class="role-content p-8 md:p-12 bg-white rounded-3xl shadow-2xl border border-indigo-100"
+>
+  <h2 class="text-3xl md:text-4xl font-bold text-indigo-800 mb-6">Your Role: The Expert Tutor</h2>
+
+  <!-- Main Grid -->
+  <div class="grid md:grid-cols-3 gap-8">
+    <!-- Left Column: Athena Chat + Input -->
+    <div class="md:col-span-1 bg-indigo-50 p-6 rounded-2xl shadow-inner flex flex-col h-full">
+      <app-chat />
+    </div>
+
+    <!-- Middle Column: Learning Progress -->
+    <div class="md:col-span-1 bg-white p-6 rounded-2xl shadow-xl flex flex-col">
+      <app-learning-targets />
+    </div>
+
+    <!-- Right Column: Athena Interests + Engagement -->
+    <div class="md:col-span-1 bg-white p-6 rounded-2xl shadow-xl flex flex-col">
+      <app-interests />
+    </div>
+  </div>
+</div>

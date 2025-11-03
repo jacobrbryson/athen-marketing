@@ -1,0 +1,68 @@
+<header class="bg-white shadow-sm sticky top-0 z-10">
+  <div class="max-w-7xl mx-auto p-4 flex justify-between items-center">
+    <a
+      routerLink="/"
+      class="text-3xl font-extrabold text-indigo-600 transition hover:text-indigo-700"
+      >Athena</a
+    >
+    <nav class="hidden md:flex space-x-6">
+      <a routerLink="/kids" class="text-gray-600 hover:text-indigo-600 transition">For Kids</a>
+      <a routerLink="/parents" class="text-gray-600 hover:text-indigo-600 transition"
+        >For Parents</a
+      >
+      <a routerLink="/teachers" class="text-gray-600 hover:text-indigo-600 transition"
+        >For Teachers</a
+      >
+    </nav>
+
+    <div class="flex space-x-3">
+      <button
+        class="px-4 py-2 bg-indigo-600 text-white rounded-xl shadow-lg hover:bg-indigo-700 transition font-medium flex items-center space-x-2"
+        routerLink="/try-it"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-rocket"
+        >
+          <path d="M4.5 4.5 19.5 19.5" />
+          <path d="m14.5 14.5 3-3" />
+          <path d="M10 6 8 8" />
+          <path d="m9 7 3-3" />
+          <path d="m18 13-3 3" />
+        </svg>
+        <span>Try It</span>
+      </button>
+
+      <button
+        class="px-4 py-2 border border-gray-300 text-gray-400 rounded-xl bg-gray-100 cursor-not-allowed font-medium flex items-center space-x-2"
+        disabled
+        title="Login currently disabled, use the Try It button to explore Athena's capabilities"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-lock"
+        >
+          <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+        <span>Login</span>
+      </button>
+    </div>
+  </div>
+</header>
