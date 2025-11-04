@@ -1,25 +1,19 @@
-<div class="flex flex-col h-full bg-white rounded-3xl shadow-2xl border border-indigo-100 p-6">
+<div class="flex flex-col h-full">
   <!-- Scrollable content -->
-  <div class="flex-1 overflow-y-auto pb-24">
-    <div
-      class="mb-4 flex justify-center h-96 bg-indigo-50 rounded-xl border border-indigo-200 shadow-inner"
-    >
-      <img src="finding-nemo-darla.gif" alt="Avatar placeholder" />
-    </div>
+  <div class="flex-1 overflow-y-auto pb-4 max-h-[500px]">
+    <app-unity-player />
   </div>
 
   <!-- Chat Input Bar -->
   <div
-    class="mt-auto w-full bg-indigo-50 border border-indigo-200 rounded-2xl shadow-inner flex items-center px-3 py-2 gap-2 box-border"
+    class="mt-auto w-full bg-indigo-50 border border-indigo-200 rounded-2xl shadow-inner flex items-center px-3 py-2 gap-2 box-border overflow-hidden"
   >
-    <!-- Input Field -->
     <input
       type="text"
       placeholder="Teach Athena something new..."
-      class="flex-1 bg-transparent outline-none text-gray-700 placeholder-gray-400 text-base"
+      class="flex-1 min-w-0 bg-transparent outline-none text-gray-700 placeholder-gray-400 text-base"
     />
 
-    <!-- Send Button -->
     <button
       class="flex-shrink-0 h-9 w-9 rounded-full bg-indigo-600 text-white flex items-center justify-center hover:bg-indigo-700 transition"
       title="Send"

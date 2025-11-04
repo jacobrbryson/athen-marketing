@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { UnityPlayerComponent } from '../../../../../../shared/unity/unity';
 
 @Component({
   selector: 'app-chat',
-  imports: [CommonModule],
+  imports: [CommonModule, UnityPlayerComponent],
   templateUrl: './chat.html',
   styleUrl: './chat.css',
 })
