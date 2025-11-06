@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { asset } from 'src/app/asset';
 
 @Component({
   selector: 'app-login',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './login.css',
 })
 export class Login {
-
+  asset = asset;
 }

@@ -1,0 +1,8 @@
+[
+  {
+    "origin": ["https://athena-476423.uc.r.appspot.com"],
+    "responseHeader": ["*"],
+    "method": ["GET", "HEAD", "OPTIONS"],
+    "maxAgeSeconds": 3600
+  }
+]

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { asset } from 'src/app/asset';
 import { Chat } from './sections/chat/chat';
 import { Interests } from './sections/interests/interests';
 import { LearningTargets } from './sections/learning-targets/learning-targets';
@@ -9,4 +10,6 @@ import { LearningTargets } from './sections/learning-targets/learning-targets';
   styleUrls: ['./kids.css'],
   imports: [Chat, LearningTargets, Interests],
 })
-export class Kids {}
+export class Kids {
+  asset = asset;
+}

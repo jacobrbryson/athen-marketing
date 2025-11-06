@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { asset } from 'src/app/asset';
 
 @Component({
   selector: 'app-see-how-athena-learns',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './see-how-athena-learns.css',
 })
 export class SeeHowAthenaLearns {
-
+  asset = asset;
 }

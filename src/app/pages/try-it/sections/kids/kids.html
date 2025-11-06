@@ -2,24 +2,40 @@
   id="kid-content"
   role="tabpanel"
   aria-labelledby="kid-tab"
-  class="role-content p-8 md:p-12 bg-white rounded-3xl shadow-2xl border border-indigo-100"
+  class="p-6 md:p-10 bg-amber-50 rounded-[30px] shadow-[0_8px_0_#d7b464] border-4 border-amber-300 cartoon-panel"
 >
-  <h2 class="text-3xl md:text-4xl font-bold text-indigo-800 mb-6">Your Role: The Expert Tutor</h2>
+  <!-- Fun Game Header -->
+  <div class="flex items-center gap-3 pb-8 mb-8">
+    <img [src]="asset('star.png')" class="h-10 w-10" alt="" />
+    <h2 class="text-4xl font-extrabold text-amber-800 tracking-wide game-title">
+      Your Role: The Expert Tutor!
+    </h2>
+    <img [src]="asset('star.png')" class="h-10 w-10" alt="" />
+  </div>
 
   <!-- Main Grid -->
   <div class="grid md:grid-cols-3 gap-8">
-    <!-- Left Column: Athena Chat + Input -->
-    <div class="md:col-span-1 bg-white p-6 rounded-2xl shadow-xl flex flex-col">
+    <!-- Chat Panel -->
+    <div class="gamified-card">
+      <div class="panel-header">
+        <span class="panel-header-text">Athena Chat</span>
+      </div>
       <app-chat />
     </div>
 
-    <!-- Middle Column: Learning Progress -->
-    <div class="md:col-span-1 bg-white p-6 rounded-2xl shadow-xl flex flex-col">
+    <!-- Learning Progress -->
+    <div class="gamified-card">
+      <div class="panel-header">
+        <span class="panel-header-text">Learning Progress</span>
+      </div>
       <app-learning-targets />
     </div>
 
-    <!-- Right Column: Athena Interests + Engagement -->
-    <div class="md:col-span-1 bg-white p-6 rounded-2xl shadow-xl flex flex-col">
+    <!-- Interests Panel -->
+    <div class="gamified-card">
+      <div class="panel-header">
+        <span class="panel-header-text">Athena’s Interests</span>
+      </div>
       <app-interests />
     </div>
   </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { asset } from 'src/app/asset';
 
 @Component({
   selector: 'app-parents',
@@ -7,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './parents.css',
 })
 export class Parents {
-
+  asset = asset;
 }

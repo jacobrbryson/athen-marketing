@@ -1,0 +1,71 @@
+/* Wisdom Panel */
+.wisdom-panel {
+  background: #fff7ed;
+  border: 4px solid #ffd67b;
+  border-radius: 24px;
+  box-shadow: 0 6px 0 #d7b464;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wisdom-label {
+  font-family: 'Luckiest Guy', 'Fredoka', sans-serif;
+  font-size: 1.2rem;
+  color: #7a4b00;
+  text-transform: uppercase;
+}
+.wisdom-value {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #4f46e5;
+}
+
+/* Learning Targets */
+.target-card {
+  background: #f0f5ff;
+  border: 3px solid #c7d2fe;
+  border-radius: 20px;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.15s, background 0.2s;
+  cursor: pointer;
+}
+.target-card:hover {
+  transform: translateY(-2px);
+  background: #e0e7ff;
+}
+.target-topic {
+  font-weight: 600;
+  color: #1e3a8a;
+}
+.target-proficiency {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-top: 0.25rem;
+}
+
+.progress-bar {
+  width: 33%;
+  height: 8px;
+  background: #dbeafe;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-left: 0.75rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #6366f1;
+  border-radius: 9999px;
+  transition: width 0.5s ease-out; /* smooth fill animation */
+}
+
+.wisdom-value {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #4f46e5;
+  transition: all 0.3s ease;
+}

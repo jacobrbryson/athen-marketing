@@ -6,6 +6,7 @@ import {
 
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
+import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -19,5 +20,6 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'disabled',
       })
     ),
+    provideHttpClient(),
   ],
 };
