@@ -1,11 +1,11 @@
-<div class="flex flex-col h-full mt-3">
-  <div class="flex-1 overflow-y-auto pb-4 max-h-[500px]">
+<div class="fun-panel mt-3 flex flex-col h-full">
+  <!-- Unity Player in RPG-style card -->
+  <div class="unity-card flex-1 overflow-y-auto max-h-[500px]">
     <app-unity-player />
   </div>
 
-  <div
-    class="mt-auto w-full bg-indigo-50 border border-indigo-200 rounded-2xl shadow-inner flex items-center px-3 py-2 gap-2"
-  >
+  <!-- Chat input -->
+  <div class="chat-input-bar mt-4 w-full flex items-center px-3 py-2 gap-2">
     <input
       class="flex-1 min-w-0 bg-transparent outline-none text-gray-700 placeholder-gray-400 text-base"
       type="text"
@@ -16,12 +16,7 @@
       (keyup.enter)="sendMessage()"
     />
 
-    <button
-      class="h-9 w-9 rounded-full bg-indigo-600 text-white flex items-center justify-center hover:bg-indigo-700 transition"
-      title="Send"
-      (click)="sendMessage()"
-      [disabled]="isSending()"
-    >
+    <button class="send-button" title="Send" (click)="sendMessage()" [disabled]="isSending()">
       <ng-container *ngIf="!isSending(); else spinner"> ➤ </ng-container>
 
       <ng-template #spinner>

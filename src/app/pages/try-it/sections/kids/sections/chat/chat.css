@@ -1,12 +1,25 @@
-/* Fun RPG-style container */
+/* Fun Panel / container */
 .fun-panel {
-  background: #fff7ed; /* soft warm color */
-  border: 4px solid #ffd67b;
-  border-radius: 30px;
-  box-shadow: 0 8px 0 #d7b464;
   display: flex;
   flex-direction: column;
   position: relative;
+  height: 100%;
+  gap: 1rem;
+}
+
+/* Unity card styling like quest-card */
+.unity-card {
+  background: #fff7ed; /* soft warm RPG color */
+  border: 4px solid #ffd67b; /* bright border */
+  border-radius: 30px; /* rounded corners */
+  box-shadow: 0 8px 0 #d7b464; /* playful shadow */
+  overflow: hidden;
+  position: relative;
+  transition: transform 0.2s;
+}
+
+.unity-card:hover {
+  transform: translateY(-2px) scale(1.01); /* subtle hover lift */
 }
 
 /* Chat input bar */
