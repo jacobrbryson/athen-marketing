@@ -10,13 +10,19 @@
       class="flex-1 min-w-0 bg-transparent outline-none text-gray-700 placeholder-gray-400 text-base"
       type="text"
       placeholder="Teach Athena something new..."
-      [value]="message()"
-      (input)="onInput($event)"
       [disabled]="isSending()"
+      [value]="message()"
+      (input)="message.set($event.target.value)"
       (keyup.enter)="sendMessage()"
+      autocomplete="off"
     />
 
-    <button class="send-button" title="Send" (click)="sendMessage()" [disabled]="isSending()">
+    <button
+      class="send-button"
+      title="Send"
+      (click)="sendMessage()"
+      [disabled]="isSending() || !message()"
+    >
       <ng-container *ngIf="!isSending(); else spinner"> ➤ </ng-container>
 
       <ng-template #spinner>

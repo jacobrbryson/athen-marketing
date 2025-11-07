@@ -1,46 +1,61 @@
-/* Fun Panel / container */
-.fun-panel {
+/* Card container */
+.unity-card {
+  background: #fff7ed;
+  border: 4px solid #ffd67b;
+  border-radius: 30px;
+  box-shadow: 0 8px 0 #d7b464;
+  overflow: visible; /* important for input visibility */
   display: flex;
   flex-direction: column;
-  position: relative;
-  height: 100%;
-  gap: 1rem;
 }
 
-/* Unity card styling like quest-card */
-.unity-card {
-  background: #fff7ed; /* soft warm RPG color */
-  border: 4px solid #ffd67b; /* bright border */
-  border-radius: 30px; /* rounded corners */
-  box-shadow: 0 8px 0 #d7b464; /* playful shadow */
-  overflow: hidden;
-  position: relative;
-  transition: transform 0.2s;
+/* Chat messages */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
-.unity-card:hover {
-  transform: translateY(-2px) scale(1.01); /* subtle hover lift */
+.chat-bubble {
+  background: #e0e7ff;
+  border: 3px solid #c7d2fe;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  color: #3730a3;
+  max-width: 70%;
+  align-self: flex-start;
 }
 
 /* Chat input bar */
 .chat-input-bar {
-  background: #e0e7ff;
-  border: 4px solid #c7d2fe;
-  border-radius: 20px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
-  padding: 0.5rem 1rem;
   display: flex;
   gap: 0.5rem;
+  border: 4px solid #c7d2fe;
+  border-radius: 20px;
+  background: #e0e7ff;
+  padding: 0.5rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+  z-index: 10;
 }
 
+/* Input field */
 .chat-input-bar input {
-  background: transparent;
+  flex: 1;
+  min-width: 0;
   border: none;
   outline: none;
+  background: transparent;
   font-size: 1rem;
   color: #3730a3;
+  pointer-events: auto;
 }
 
+/* Send button */
 .send-button {
   background: #6366f1;
   border-radius: 9999px;
@@ -50,9 +65,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: bold;
+  cursor: pointer;
   transition: background 0.2s;
 }
 
 .send-button:hover {
   background: #4f46e5;
+}
+
+.send-button:disabled {
+  background: #a5b4fc;
+  cursor: not-allowed;
 }
