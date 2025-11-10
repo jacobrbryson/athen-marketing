@@ -14,7 +14,7 @@ declare global {
 @Component({
   selector: 'app-unity-player',
   template: `<div id="unity-container" class="unity-container">
-    <canvas id="unity-canvas" style="width: 100%; height: 100%"></canvas>
+    <canvas id="unity-canvas" style="width: 100%; height: 100%" tabindex="1"></canvas>
   </div>`,
   styleUrls: ['./unity.css'],
 })

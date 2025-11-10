@@ -1,12 +1,19 @@
 <div class="fun-panel mt-3 flex flex-col h-full">
   <!-- Unity Player in RPG-style card -->
   <div class="unity-card flex-1 overflow-y-auto max-h-[500px]">
+    @if (sessionId() !== null) {
     <app-unity-player />
+    } @else {
+    <div class="flex items-center justify-center h-full text-gray-500 py-10">
+      Loading session...
+    </div>
+    }
   </div>
 
   <!-- Chat input -->
   <div class="chat-input-bar mt-4 w-full flex items-center px-3 py-2 gap-2">
     <input
+      tabindex="0"
       class="flex-1 min-w-0 bg-transparent outline-none text-gray-700 placeholder-gray-400 text-base"
       type="text"
       placeholder="Teach Athena something new..."
@@ -23,13 +30,12 @@
       (click)="sendMessage()"
       [disabled]="isSending() || !message()"
     >
-      <ng-container *ngIf="!isSending(); else spinner"> ➤ </ng-container>
-
-      <ng-template #spinner>
-        <div
-          class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"
-        ></div>
-      </ng-template>
+      @if (!isSending()) { ➤ } @else {
+      <div
+        class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"
+      ></div>
+      }
     </button>
   </div>
+  <app-chat-preview [messages]="messages()" />
 </div>
