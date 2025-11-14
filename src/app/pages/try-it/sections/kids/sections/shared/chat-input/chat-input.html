@@ -1,0 +1,26 @@
+<div class="chat-input-bar mt-4 w-full flex items-center px-3 py-2 gap-2">
+  <input
+    tabindex="0"
+    class="flex-1 min-w-0 bg-transparent outline-none text-gray-700 placeholder-gray-400 text-base"
+    type="text"
+    placeholder="Teach Athena something new..."
+    [disabled]="isSending()"
+    [value]="message()"
+    (input)="message.set($event.target.value)"
+    (keyup.enter)="sendMessage()"
+    autocomplete="off"
+    maxlength="256"
+    minlength="3"
+  />
+
+  <button
+    class="send-button"
+    title="Send"
+    (click)="sendMessage()"
+    [disabled]="isSending() || !message()"
+  >
+    @if (!isSending()) { ➤ } @else {
+    <div class="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full"></div>
+    }
+  </button>
+</div>

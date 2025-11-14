@@ -1,30 +1,34 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, signal, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Chat as ChatService } from 'src/app/services/chat'; // Import the new interface
+import { ChatService } from 'src/app/services/chat'; // Import the new interface
 import { UnityPlayerComponent } from 'src/app/shared/unity/unity';
+import { ChatInput } from '../shared/chat-input/chat-input';
 import { ChatPreviewComponent } from './chat-preview/chat-preview';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, FormsModule, UnityPlayerComponent, ChatPreviewComponent],
+  imports: [CommonModule, FormsModule, UnityPlayerComponent, ChatPreviewComponent, ChatInput],
   templateUrl: './chat.html',
   styleUrls: ['./chat.css'],
 })
 export class Chat implements OnInit, OnDestroy {
-  // Inject the new service
+  @ViewChild(ChatPreviewComponent) chatPreview!: ChatPreviewComponent;
+
   private chatService = inject(ChatService);
 
-  // Component state for UI interaction
   message = signal('');
   isSending = signal(false);
+  isThinking = signal(false);
 
   // Expose service state to the template for display
   messages = this.chatService.messages;
   sessionId = this.chatService.sessionId;
 
-  constructor() {}
+  constructor() {
+    this.sendMessage = this.sendMessage.bind(this);
+  }
 
   ngOnInit(): void {
     // Start the chat service initialization (session and connection)
@@ -38,21 +42,24 @@ export class Chat implements OnInit, OnDestroy {
 
   async sendMessage() {
     const text = this.message().trim();
-    const currentSessionId = this.sessionId();
 
     // Check pre-requisites
-    if (!text || this.isSending() || !currentSessionId) return;
+    if (!text || this.isSending()) return;
+
+    if (this.chatPreview && !this.chatPreview.isDrawerOpen) {
+      this.chatPreview.openDrawer();
+    }
 
     this.isSending.set(true);
-    this.message.set(''); // Clear input immediately for better UX
+    this.message.set('');
+
+    this.isThinking.set(true);
 
     try {
-      // Delegate sending the message to the service
       await this.chatService.sendMessage(text);
-      // Real-time updates handled by the service's WebSocket listener
     } catch (err) {
       console.error('Failed to send message:', err);
-      // In a production app, you would notify the user here
+      this.isThinking.set(false);
     } finally {
       this.isSending.set(false);
     }

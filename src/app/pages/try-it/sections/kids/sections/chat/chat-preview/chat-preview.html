@@ -41,12 +41,12 @@
     <div class="empty">No messages yet.</div>
     } @if (messages.length > 0) {
     <ol class="message-list">
-      @for (m of messages; track m.id) {
-      <li class="message-row" [attr.data-role]="m.role">
+      @for (m of messages; track m.uuid) {
+      <li class="message-row" [attr.data-role]="m.is_human">
         <div class="meta">
-          <span class="role">{{ m.role }}</span>
-          @if (m.timestamp) {
-          <span class="time"> · {{ formatTimestamp(m.timestamp) }}</span>
+          <span class="role">{{ m.is_human ? 'You' : 'Athena' }}</span>
+          @if (m.created_at) {
+          <span class="time"> · {{ formatTimestamp(m.created_at) }}</span>
           }
         </div>
         <div class="body">{{ m.text }}</div>
@@ -57,6 +57,10 @@
   </div>
 
   <footer class="drawer-footer">
-    <button (click)="closeDrawer()">Close</button>
+    <app-chat-input
+      [message]="message"
+      [isSending]="isSending"
+      [sendMessage]="sendMessage"
+    ></app-chat-input>
   </footer>
 </aside>

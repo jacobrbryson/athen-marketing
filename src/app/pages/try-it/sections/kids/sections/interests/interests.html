@@ -1,13 +1,13 @@
 <!-- Daily Challenge / Quest Card -->
-<div class="quest-card mt-3 p-4 text-center relative">
+<!--div class="quest-card mt-3 p-4 text-center relative">
   <p class="quest-title mb-2">🌟 Daily Challenge!</p>
   <p class="quest-text">Teach Athena more about fractions!</p>
-</div>
+</div-->
 
-<h3 class="section-title mt-6 mb-4">Athena’s Interests</h3>
+<!--h3 class="section-title mt-6 mb-4">Athena’s Interests</h3-->
 
 <!-- Interest Tags -->
-<div class="interest-tags mb-6 flex flex-wrap gap-2">
+<div class="interest-tags my-6 flex flex-wrap gap-2">
   @for (interest of athenaInterests(); track interest) {
   <span class="interest-badge">
     {{ interest }}
@@ -15,13 +15,15 @@
   }
 </div>
 
-<!-- Recent Lessons / Fun Engagement -->
-<h4 class="section-title mt-6 mb-2">Recent Learning Moments</h4>
-<div class="recent-lessons space-y-3 flex-1 overflow-y-auto">
-  @for (lesson of recentLessons(); track lesson.id) {
+@if (recentLessons().length) {
+<h4 class="section-title mt-6 mb-2 h-100">Recent Learning Moments</h4>
+<div class="recent-lessons space-y-3 flex-1 overflow-y-auto h-100">
+  @for (lesson of recentLessons(); track lesson.id) { <-- 💡 Correction: Added parentheses around
+  the expression
   <div class="lesson-card">
     <div class="lesson-title">{{ lesson.title }}</div>
     <div class="lesson-summary">{{ lesson.summary }}</div>
   </div>
   }
 </div>
+}

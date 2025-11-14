@@ -99,6 +99,5 @@
   color: #4b5563;
 }
 .recent-lessons {
-  max-height: 300px; /* optional: scrollable area */
   overflow-y: auto;
 }

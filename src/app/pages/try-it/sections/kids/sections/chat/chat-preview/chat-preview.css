@@ -140,10 +140,8 @@
 
 /* footer */
 .drawer-footer {
-  padding: 10px 16px;
+  padding: 0px 16px 16px 16px;
   border-top: 1px solid rgba(0, 0, 0, 0.04);
-  display: flex;
-  justify-content: flex-end;
 }
 
 /* responsiveness */
@@ -151,4 +149,35 @@
   .drawer-panel {
     width: 100vw;
   }
+}
+
+/* Styling for bottom-up message order */
+.message-list.bottom-up {
+  display: flex;
+  flex-direction: column-reverse; /* Reverses the list items */
+  padding: 0; /* Remove default padding for lists */
+  margin: 0;
+  list-style: none; /* Remove list bullet points */
+}
+
+/* Ensure the drawer body is the scroll container and takes up all space */
+.drawer-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Example: ensure panel takes full screen height */
+}
+
+.drawer-body {
+  flex-grow: 1; /* Allows the body to take up all available space */
+  overflow-y: auto; /* Makes the message list scrollable */
+  /* This setup ensures the content starts from the bottom */
+  display: flex;
+  flex-direction: column-reverse; /* Important: Pushes content to the bottom */
+}
+
+/* Because the drawer-body is also column-reverse, the message list should be at the bottom */
+.drawer-body .message-list {
+  flex-shrink: 0; /* Prevents the list from shrinking if content is small */
+  /* Ensure the list fills the available space at the bottom */
+  margin-top: auto;
 }
