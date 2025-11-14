@@ -20,11 +20,11 @@ export class Chat implements OnInit, OnDestroy {
 
   message = signal('');
   isSending = signal(false);
-  isThinking = signal(false);
 
   // Expose service state to the template for display
   messages = this.chatService.messages;
   sessionId = this.chatService.sessionId;
+  isThinking = this.chatService.isThinking;
 
   constructor() {
     this.sendMessage = this.sendMessage.bind(this);

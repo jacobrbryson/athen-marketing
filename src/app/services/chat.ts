@@ -37,8 +37,8 @@ export class ChatService {
   sessionId = signal<string | null>(null);
   wisdomPoints = signal<number>(0);
   learningTargets = signal<Target[]>([]);
-  // 💡 NEW: Signal to store recent lessons
   recentLessons = signal<Lesson[]>([]);
+  isThinking = signal<boolean>(false);
 
   private ws: WebSocket | null = null;
   private reconnectTimer: any = null;
@@ -252,7 +252,12 @@ export class ChatService {
       try {
         const msg = JSON.parse(event.data);
 
-        if (msg && msg.rpc === 'addMessage') this.messages.update((msgs) => [...msgs, msg.message]);
+        if (msg && msg.rpc === 'addMessage') {
+          this.messages.update((msgs) => [...msgs, msg.message]);
+          if (msg.session?.is_busy === false) {
+            this.isThinking.set(false);
+          }
+        }
         if (msg && msg.rpc === 'addSessionTopic')
           this.learningTargets.update((msgs) => [...msgs, msg.topic]);
         if (msg && msg.rpc === 'updateSessionTopic')

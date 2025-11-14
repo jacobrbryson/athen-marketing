@@ -19,24 +19,12 @@ import { ChatInput } from '../../shared/chat-input/chat-input';
   styleUrls: ['./chat-preview.css'],
 })
 export class ChatPreviewComponent {
-  private _messages: Message[] = [];
-  @Input()
-  set messages(v: Message[] | null | undefined) {
-    if (!v || !Array.isArray(v)) {
-      this._messages = [];
-    } else {
-      this._messages = v.slice(-100);
-    }
-  }
-  get messages(): Message[] {
-    return this._messages;
-  }
-
   drawerOpen = false;
   get isDrawerOpen(): boolean {
     return this.drawerOpen;
   }
 
+  @Input() messages: Message[] = [];
   @Input({ required: true }) message!: WritableSignal<string>;
   @Input({ required: true }) isSending!: Signal<boolean>;
   @Input({ required: true }) sendMessage!: () => Promise<void>;
@@ -46,13 +34,15 @@ export class ChatPreviewComponent {
     if (this.isThinking) {
       return 'Thinking...';
     }
-    if (!this._messages || this._messages.length === 0) return 'No messages yet';
 
-    console.log(this._messages);
+    const msgs = this.messages;
 
-    // Loop backwards from the last message
-    for (let i = this._messages.length - 1; i >= 0; i--) {
-      const m = this._messages[i];
+    const recentMessages = msgs.slice(-100);
+
+    if (!recentMessages || recentMessages.length === 0) return 'No messages yet';
+
+    for (let i = recentMessages.length - 1; i >= 0; i--) {
+      const m = recentMessages[i];
 
       if (!m.is_human) {
         return this.truncate(m.text);
