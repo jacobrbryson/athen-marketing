@@ -1,16 +1,41 @@
 import { CommonModule, NgIf } from '@angular/common';
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { Kids } from 'src/app/pages/dashboard/sections/kids/kids';
+import { LearningCompanion } from 'src/app/pages/dashboard/sections/learning-companion/learning-companion';
 import { ProfileService } from 'src/app/services/profile';
 import { Breadcrumb } from 'src/app/shared/breadcrumb/breadcrumb';
 import { Parents } from 'src/app/pages/dashboard/sections/parents/parents';
 import { Teachers } from 'src/app/pages/dashboard/sections/teachers/teachers';
 
+type AdultTab = 'learning' | 'teacher' | 'parent';
+type AdultTabRequirement = 'teacher' | 'parent';
+
+const ADULT_TAB_LABELS: Record<AdultTab, string> = {
+	learning: 'Learning Companion',
+	teacher: 'Teacher',
+	parent: 'Parent',
+};
+
+const ADULT_TAB_CONFIG: ReadonlyArray<{
+	id: AdultTab;
+	label: string;
+	requires?: AdultTabRequirement;
+}> = [
+	{ id: 'learning', label: ADULT_TAB_LABELS.learning },
+	{ id: 'teacher', label: ADULT_TAB_LABELS.teacher, requires: 'teacher' },
+	{ id: 'parent', label: ADULT_TAB_LABELS.parent, requires: 'parent' },
+];
+
+const ADULT_TABS: ReadonlyArray<AdultTab> = ['learning', 'teacher', 'parent'];
+
+const isAdultTab = (value: string | null): value is AdultTab => {
+	return value !== null && ADULT_TABS.includes(value as AdultTab);
+};
+
 @Component({
 	selector: 'app-dashboard',
 	standalone: true,
-	imports: [CommonModule, NgIf, Kids, Breadcrumb, Parents, Teachers],
+	imports: [CommonModule, NgIf, LearningCompanion, Breadcrumb, Parents, Teachers],
 	templateUrl: './dashboard.html',
 	styleUrl: './dashboard.css',
 })
@@ -24,7 +49,14 @@ export class Dashboard implements OnInit {
 	viewMode = signal<'kid' | 'adult' | 'unknown'>('unknown');
 	isTeacher = signal<boolean>(false);
 	isParent = signal<boolean>(false);
-	activeAdultTab = signal<'teacher' | 'parent'>('parent');
+	activeAdultTab = signal<AdultTab>('learning');
+	adultTabs = computed(() =>
+		ADULT_TAB_CONFIG.filter((tab) => {
+			if (tab.requires === 'teacher') return this.isTeacher();
+			if (tab.requires === 'parent') return this.isParent();
+			return true;
+		})
+	);
 
 	async ngOnInit() {
 		await this.init();
@@ -69,17 +101,17 @@ export class Dashboard implements OnInit {
 		this.isTeacher.set(Boolean(profile.is_teacher));
 		this.isParent.set(Boolean(profile.is_guardian));
 
-		if (this.isTeacher() && this.isParent()) {
-			const storedTab = this.getStoredAdultTab();
-			if (storedTab) {
-				this.activeAdultTab.set(storedTab);
-			} else {
-				// Default to teacher for adults if both roles are available
-				this.activeAdultTab.set('teacher');
-			}
+		const storedTab = this.getStoredAdultTab();
+		const allowedTabs = this.adultTabs().map((tab) => tab.id);
+
+		if (storedTab && allowedTabs.includes(storedTab)) {
+			this.activeAdultTab.set(storedTab);
+		} else if (this.isParent()) {
+			this.activeAdultTab.set('parent');
+		} else if (this.isTeacher()) {
+			this.activeAdultTab.set('teacher');
 		} else {
-			if (this.isTeacher() && !this.isParent()) this.activeAdultTab.set('teacher');
-			if (this.isParent() && !this.isTeacher()) this.activeAdultTab.set('parent');
+			this.activeAdultTab.set('learning');
 		}
 
 		this.viewMode.set(age < 18 ? 'kid' : 'adult');
@@ -108,12 +140,12 @@ export class Dashboard implements OnInit {
 		this.router.navigate(['/profile']);
 	}
 
-	setAdultTab(role: 'teacher' | 'parent') {
+	setAdultTab(role: AdultTab) {
 		this.activeAdultTab.set(role);
 		this.persistAdultTab(role);
 	}
 
-	private persistAdultTab(role: 'teacher' | 'parent') {
+	private persistAdultTab(role: AdultTab) {
 		if (typeof window === 'undefined') return;
 		window.localStorage.setItem(
 			Dashboard.ADULT_TAB_STORAGE_KEY,
@@ -121,28 +153,21 @@ export class Dashboard implements OnInit {
 		);
 	}
 
-	private getStoredAdultTab(): 'teacher' | 'parent' | null {
+	private getStoredAdultTab(): AdultTab | null {
 		if (typeof window === 'undefined') return null;
 		const value = window.localStorage.getItem(
 			Dashboard.ADULT_TAB_STORAGE_KEY
 		);
-		return value === 'teacher' || value === 'parent' ? value : null;
+		return isAdultTab(value) ? value : null;
 	}
 
 	breadcrumbLabel(): string {
 		if (this.viewMode() === 'kid') {
-			return 'Learning Companion';
+			return ADULT_TAB_LABELS.learning;
 		}
 
 		if (this.viewMode() === 'adult') {
-			if (this.isTeacher() && this.activeAdultTab() === 'teacher') {
-				return 'Teacher';
-			}
-			if (this.isParent() && this.activeAdultTab() === 'parent') {
-				return 'Parent';
-			}
-			if (this.isTeacher()) return 'Teacher';
-			if (this.isParent()) return 'Parent';
+			return ADULT_TAB_LABELS[this.activeAdultTab()];
 		}
 
 		return 'Dashboard';

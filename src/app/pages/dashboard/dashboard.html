@@ -9,37 +9,26 @@
   </header>
 
   <ng-container *ngIf="!loading(); else loadingTpl">
-    <app-kids *ngIf="viewMode() === 'kid'"></app-kids>
+    <app-learning-companion *ngIf="viewMode() === 'kid'"></app-learning-companion>
 
     <div *ngIf="viewMode() === 'adult'">
       <div class="tab-body tab-card">
-        <ng-container *ngIf="isParent() && isTeacher(); else singleRole">
-          <div class="tab-header">
-            <button
-              class="tab-btn"
-              type="button"
-              [class.active]="activeAdultTab() === 'teacher'"
-              (click)="setAdultTab('teacher')"
-            >
-              Teacher
-            </button>
-            <button
-              class="tab-btn"
-              type="button"
-              [class.active]="activeAdultTab() === 'parent'"
-              (click)="setAdultTab('parent')"
-            >
-              Parent
-            </button>
-          </div>
-          <app-teachers *ngIf="activeAdultTab() === 'teacher'"></app-teachers>
-          <app-parents *ngIf="activeAdultTab() === 'parent'"></app-parents>
-        </ng-container>
-
-        <ng-template #singleRole>
-          <app-teachers *ngIf="isTeacher() && !isParent()"></app-teachers>
-          <app-parents *ngIf="isParent() && !isTeacher()"></app-parents>
-        </ng-template>
+        <div class="tab-header">
+          <button
+            *ngFor="let tab of adultTabs()"
+            class="tab-btn"
+            type="button"
+            [class.active]="activeAdultTab() === tab.id"
+            (click)="setAdultTab(tab.id)"
+          >
+            {{ tab.label }}
+          </button>
+        </div>
+        <app-teachers *ngIf="activeAdultTab() === 'teacher'"></app-teachers>
+        <app-parents *ngIf="activeAdultTab() === 'parent'"></app-parents>
+        <app-learning-companion
+          *ngIf="activeAdultTab() === 'learning'"
+        ></app-learning-companion>
       </div>
     </div>
   </ng-container>

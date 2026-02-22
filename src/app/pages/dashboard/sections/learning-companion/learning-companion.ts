@@ -5,12 +5,12 @@ import { Chat } from './sections/chat/chat';
 import { LearningTargets } from './sections/learning-targets/learning-targets';
 
 @Component({
-  selector: 'app-kids',
+  selector: 'app-learning-companion',
   standalone: true,
-  templateUrl: './kids.html',
-  styleUrls: ['./kids.css'],
+  templateUrl: './learning-companion.html',
+  styleUrls: ['./learning-companion.css'],
   imports: [Chat, LearningTargets, UnityPlayerComponent],
 })
-export class Kids {
+export class LearningCompanion {
   asset = asset;
 }
