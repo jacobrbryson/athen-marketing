@@ -1,9 +1,9 @@
-const cacheName = "DefaultCompany-Athena-0.1.0";
+const cacheName = "Orcwood-Athena-0.1.0";
 const contentToCache = [
-    "Build/Dist.loader.js",
-    "Build/Dist.framework.js",
-    "Build/Dist.data",
-    "Build/Dist.wasm",
+    "Build/build.loader.js",
+    "Build/build.framework.js",
+    "Build/build.data",
+    "Build/build.wasm",
     "TemplateData/style.css"
 
 ];

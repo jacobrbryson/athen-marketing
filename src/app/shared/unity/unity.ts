@@ -21,7 +21,7 @@ declare global {
 export class UnityPlayerComponent implements OnInit {
   ngOnInit() {
     const loaderScript = document.createElement('script');
-    loaderScript.src = asset('unity/Build/Dist.loader.js');
+    loaderScript.src = asset('unity/Build/build.loader.js');
 
     loaderScript.onload = () => {
       this.initializeUnity();
@@ -39,9 +39,9 @@ export class UnityPlayerComponent implements OnInit {
 
     // Configuration object (paths are relative to the loader script location)
     const config = {
-      dataUrl: asset('unity/Build/Dist.data'),
-      frameworkUrl: asset('unity/Build/Dist.framework.js'),
-      codeUrl: asset('unity/Build/Dist.wasm'),
+      dataUrl: asset('unity/Build/build.data'),
+      frameworkUrl: asset('unity/Build/build.framework.js'),
+      codeUrl: asset('unity/Build/build.wasm'),
       streamingAssetsUrl: 'StreamingAssets',
       companyName: 'DefaultCompany',
       productName: 'MyUnityProject',
