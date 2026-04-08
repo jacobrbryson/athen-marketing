@@ -1,8 +1,8 @@
 <div class="fun-panel flex flex-col h-full">
   <div class="messages-container" #messagesContainer>
-    @if (messages().length === 0) {
+    @if (messages().length === 0 && !isThinking()) {
     <div class="empty">No messages yet.</div>
-    } @if (messages().length > 0) {
+    } @if (messages().length > 0 || isThinking()) {
     <ol class="message-list">
       @for (m of messages(); track trackById($index, m)) {
       <li class="message-row" [attr.data-role]="m.is_human ? 'user' : 'athena'">
@@ -13,6 +13,18 @@
           }
         </div>
         <div class="body">{{ m.text }}</div>
+      </li>
+      }
+
+      @if (isThinking()) {
+      <li class="message-row message-row--thinking" data-role="athena">
+        <div class="meta">
+          <span class="role">Athena</span>
+        </div>
+        <div class="body body--thinking">
+          <span class="thinking-spinner" aria-hidden="true"></span>
+          <em>Thinking</em>
+        </div>
       </li>
       }
     </ol>

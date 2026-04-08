@@ -1,9 +1,9 @@
 const cacheName = "Orcwood-Athena-0.1.0";
 const contentToCache = [
-    "Build/build.loader.js",
-    "Build/build.framework.js",
-    "Build/build.data",
-    "Build/build.wasm",
+    "Build/unity.loader.js",
+    "Build/unity.framework.js",
+    "Build/unity.data",
+    "Build/unity.wasm",
     "TemplateData/style.css"
 
 ];

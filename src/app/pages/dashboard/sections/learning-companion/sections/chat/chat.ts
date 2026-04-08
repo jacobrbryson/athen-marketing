@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, ViewChild, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, ViewChild, effect, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ChatService, Message } from 'src/app/services/chat'; // Import the new interface
 import { ChatInput } from '../shared/chat-input/chat-input';
@@ -27,6 +27,12 @@ export class Chat implements OnInit, OnDestroy {
 
   constructor() {
     this.sendMessage = this.sendMessage.bind(this);
+
+    effect(() => {
+      this.messages();
+      this.isThinking();
+      queueMicrotask(() => this.scrollToBottom());
+    });
   }
 
   ngOnInit(): void {
@@ -58,7 +64,6 @@ export class Chat implements OnInit, OnDestroy {
     } finally {
       this.isSending.set(false);
       this.focusInput();
-      this.scrollToBottom();
     }
   }
 

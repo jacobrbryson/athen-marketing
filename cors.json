@@ -1,6 +1,6 @@
 [
   {
-    "origin": ["https://athena-476423.uc.r.appspot.com"],
+    "origin": ["https://athena-476423.uc.r.appspot.com", "https://athena-learning.app"],
     "responseHeader": ["*"],
     "method": ["GET", "HEAD", "OPTIONS"],
     "maxAgeSeconds": 3600

@@ -39,6 +39,7 @@ export class ChatService {
   learningTargets = signal<Target[]>([]);
   recentLessons = signal<Lesson[]>([]);
   isThinking = signal<boolean>(false);
+  wsConnected = signal<boolean>(false);
 
   private ws: WebSocket | null = null;
   private reconnectTimer: any = null;
@@ -251,6 +252,7 @@ export class ChatService {
 
     this.ws.onopen = () => {
       console.log('✅ ChatService: WebSocket connected');
+      this.wsConnected.set(true);
       if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
     };
 
@@ -262,6 +264,11 @@ export class ChatService {
           this.messages.update((msgs) => [...msgs, msg.message]);
           if (msg.session?.is_busy === false) {
             this.isThinking.set(false);
+          }
+        }
+        if (msg && msg.rpc === 'sessionStatus') {
+          if (typeof msg.session?.is_busy === 'boolean') {
+            this.isThinking.set(msg.session.is_busy);
           }
         }
         if (msg && msg.rpc === 'addSessionTopic')
@@ -276,11 +283,13 @@ export class ChatService {
 
     this.ws.onclose = () => {
       console.warn('⚠️ ChatService: WebSocket closed, retrying in 2s...');
+      this.wsConnected.set(false);
       this.scheduleReconnect();
     };
 
     this.ws.onerror = (err) => {
       console.error('ChatService: WebSocket error:', err);
+      this.wsConnected.set(false);
       this.ws?.close();
     };
   } /** Auto reconnect (lightweight) */
@@ -300,6 +309,7 @@ export class ChatService {
     }
     if (this.ws) {
       console.log('ChatService: Closing WebSocket connection');
+      this.wsConnected.set(false);
       this.ws.close();
       this.ws = null;
     }
