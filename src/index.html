@@ -2,20 +2,75 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Athena - AI Companion</title>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YE8SFBP3PT"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+
+      // Pageviews are sent manually on each Angular route change (see app.ts),
+      // so disable gtag's automatic pageview to avoid double-counting.
+      gtag('config', 'G-YE8SFBP3PT', { send_page_view: false });
+    </script>
+
+    <title>Athena | AI Companion</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Athena is the AI learning companion built to be taught by your child. Kids teach the AI to cement knowledge, build confidence, and reach true mastery."
+    />
+    <meta name="theme-color" content="#4f46e5" />
+
+    <!-- Open Graph / social defaults (per-route values are set at runtime) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Athena" />
+    <meta property="og:title" content="Athena | AI Companion" />
+    <meta
+      property="og:description"
+      content="The only AI built to be taught by your child — cementing knowledge, boosting confidence, and achieving true mastery."
+    />
+    <meta
+      property="og:image"
+      content="https://storage.googleapis.com/assets-athena-app/kid-preview.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Athena | AI Companion" />
+    <meta
+      name="twitter:description"
+      content="The only AI built to be taught by your child — cementing knowledge, boosting confidence, and achieving true mastery."
+    />
+    <meta
+      name="twitter:image"
+      content="https://storage.googleapis.com/assets-athena-app/kid-preview.png"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Athena",
+        "url": "https://athena.app",
+        "logo": "https://storage.googleapis.com/assets-athena-app/favicon/web-app-manifest-512x512.png",
+        "description": "Athena is the AI learning companion built to be taught by your child, cementing knowledge and building confidence through the teach-first method."
+      }
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
       rel="stylesheet"
     />
-    <link rel="icon" type="image/png" href="/public/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/public/favicon/apple-touch-icon.png" />
-    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <link rel="icon" type="image/png" href="/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
     <script src="https://accounts.google.com/gsi/client" async defer></script>
   </head>
   <body>

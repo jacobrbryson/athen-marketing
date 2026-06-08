@@ -26,7 +26,12 @@
                   "with": "src/environments/environment.production.ts"
                 }
               ],
-              "assets": ["src/favicon.ico"],
+              "assets": [
+                "src/favicon.ico",
+                { "glob": "robots.txt", "input": "src", "output": "." },
+                { "glob": "sitemap.xml", "input": "src", "output": "." },
+                { "glob": "**/*", "input": "public/favicon", "output": "favicon" }
+              ],
               "budgets": [
                 {
                   "type": "initial",
@@ -43,6 +48,9 @@
             "development": {
               "assets": [
                 "src/favicon.ico",
+                { "glob": "robots.txt", "input": "src", "output": "." },
+                { "glob": "sitemap.xml", "input": "src", "output": "." },
+                { "glob": "**/*", "input": "public/favicon", "output": "favicon" },
                 {
                   "glob": "**/*",
                   "input": "public",
