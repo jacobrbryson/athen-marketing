@@ -3,6 +3,9 @@ import { inject, Injectable, signal } from '@angular/core';
 import { firstValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ToastService } from './toast';
+import { ActiveProfileService } from './active-profile';
+import { ConversationModeService } from './conversation-mode';
+import { ProfileService } from './profile';
 
 export interface Message {
   uuid: string;
@@ -32,6 +35,9 @@ export class ChatService {
   // Dependencies injected using the modern 'inject' function
   private http = inject(HttpClient);
   private toastService = inject(ToastService); // Public state exposed as signals
+  private activeProfile = inject(ActiveProfileService);
+  private modeService = inject(ConversationModeService);
+  private profile = inject(ProfileService);
 
   messages = signal<Message[]>([]);
   sessionId = signal<string | null>(null);
@@ -70,24 +76,87 @@ export class ChatService {
   }
 
   async init() {
+    await this.modeService.loadModes();
     await this.setSessionId();
   }
 
+  /** localStorage key namespaced per active profile so histories stay separate. */
+  private sessionStorageKey(): string {
+    return `sessionId:${this.activeProfile.storageKey()}`;
+  }
+
+  /**
+   * The profile uuid to bind the session to. Children already carry their
+   * uuid. A parent's active profile defaults to null (an IP-bound session),
+   * but a logged-in parent still has a real profile — binding to it lets
+   * profile-scoped features (e.g. Connected App grounding) work for the
+   * parent's own conversation. Falls back to null for anonymous visitors.
+   */
+  private async resolveProfileUuid(): Promise<string | null> {
+    const active = this.activeProfile.active();
+    if (active.profileUuid) return active.profileUuid;
+    if (active.kind !== 'parent') return null;
+    const loaded = this.profile.profile()?.uuid;
+    if (loaded) return loaded;
+    try {
+      return (await this.profile.fetchProfile())?.uuid ?? null;
+    } catch {
+      return null;
+    }
+  }
+
+  /**
+   * Re-initialize chat for the currently active profile. Called after a
+   * profile switch so each child/parent gets its own session + history.
+   */
+  async reinitForActiveProfile() {
+    this.close();
+    this.messages.set([]);
+    this.learningTargets.set([]);
+    await this.setSessionId();
+  }
+
+  /** Switch the conversation mode of the current session (Phase 5). */
+  async changeMode(mode: string) {
+    this.modeService.setCurrent(mode);
+    const sessionId = this.sessionId();
+    if (!sessionId) return;
+    try {
+      const params = new URLSearchParams({ sessionId, mode });
+      await firstValueFrom(
+        this.http.get(`${environment.proxyServer}/api/v1/session?${params.toString()}`)
+      );
+    } catch (err) {
+      this.handleHttpError(err, 'mode change');
+    }
+  }
+
   private async setSessionId() {
-    const storedId = localStorage.getItem('sessionId');
+    const storageKey = this.sessionStorageKey();
+    const storedId = localStorage.getItem(storageKey);
     const context = 'session ID fetch';
 
     try {
-      const url = storedId
-        ? `${environment.proxyServer}/api/v1/session?sessionId=${storedId}`
-        : `${environment.proxyServer}/api/v1/session`;
+      const params = new URLSearchParams();
+      if (storedId) params.set('sessionId', storedId);
+      params.set('mode', this.modeService.current());
+      const profileUuid = await this.resolveProfileUuid();
+      if (profileUuid) params.set('profile_uuid', profileUuid);
+
+      const url = `${environment.proxyServer}/api/v1/session?${params.toString()}`;
 
       const res: any = await firstValueFrom(this.http.get(url));
 
       if (res?.session?.uuid) {
         const sessionId = res.session.uuid;
         this.sessionId.set(sessionId);
-        localStorage.setItem('sessionId', sessionId);
+        localStorage.setItem(storageKey, sessionId);
+
+        this.modeService.setAllowedModes(res.session.allowed_modes);
+
+        if (res.session.mode) {
+          this.modeService.setCurrent(res.session.mode);
+        }
 
         if (res.session.wisdom_points !== undefined && res.session.wisdom_points !== null) {
           this.wisdomPoints.set(res.session.wisdom_points);

@@ -1,18 +1,59 @@
-<div class="chat-input-bar mt-4 w-full flex items-center px-3 py-2 gap-2">
+<!-- Conversation mode switcher (Phase 5) -->
+@if (modes().length > 1) {
+<div class="flex items-center gap-2 mb-2 px-1">
+  @for (m of modes(); track m.key) {
+  <button
+    type="button"
+    class="px-3 py-1 rounded-full text-xs font-semibold transition-colors"
+    [class.bg-indigo-600]="currentMode() === m.key"
+    [class.text-white]="currentMode() === m.key"
+    [class.bg-gray-100]="currentMode() !== m.key"
+    [class.text-gray-600]="currentMode() !== m.key && canUseMode(m.key)"
+    [class.text-gray-400]="!canUseMode(m.key)"
+    [class.opacity-60]="!canUseMode(m.key)"
+    [class.cursor-not-allowed]="!canUseMode(m.key)"
+    [disabled]="!canUseMode(m.key)"
+    [attr.aria-disabled]="!canUseMode(m.key)"
+    [title]="modeTitle(m)"
+    (click)="selectMode(m.key)"
+  >
+    {{ m.label }}@if (!canUseMode(m.key)) { 🔒 }
+  </button>
+  }
+</div>
+}
+
+<div class="chat-input-bar mt-1 w-full flex items-center px-3 py-2 gap-2">
   <input
     #messageInput
     tabindex="0"
     class="flex-1 min-w-0 bg-transparent outline-none text-gray-700 placeholder-gray-400 text-base"
     type="text"
-    placeholder="Teach Athena something new..."
+    [placeholder]="voice.listening() ? 'Listening…' : placeholder()"
     [disabled]="isSending()"
     [value]="message()"
-    (input)="message.set($event.target.value)"
+    (input)="message.set($any($event.target).value)"
     (keyup.enter)="sendMessage()"
     autocomplete="off"
     maxlength="256"
     minlength="3"
   />
+
+  <!-- Push-to-talk (Phase 6) — hidden when unsupported -->
+  @if (voiceSupported()) {
+  <button
+    type="button"
+    class="mic-button"
+    [class.listening]="voice.listening()"
+    title="Hold to talk"
+    (pointerdown)="startVoice($event)"
+    (pointerup)="stopVoice()"
+    (pointerleave)="stopVoice()"
+    (pointercancel)="stopVoice()"
+  >
+    🎤
+  </button>
+  }
 
   <button
     class="send-button"
@@ -25,3 +66,7 @@
     }
   </button>
 </div>
+
+@if (voice.errorMessage()) {
+<p class="text-xs text-red-500 mt-1 px-1">{{ voice.errorMessage() }}</p>
+}

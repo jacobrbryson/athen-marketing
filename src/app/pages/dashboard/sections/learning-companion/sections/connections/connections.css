@@ -1,0 +1,89 @@
+.connections {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.connection-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: #fffaf0;
+  border: 3px solid #ffd67b;
+  border-radius: 16px;
+  box-shadow: 0 4px 0 #d6a445;
+  padding: 0.6rem 0.9rem;
+}
+
+.connection-row--disabled {
+  box-shadow: none;
+  border-color: #e7e1d2;
+  background: #f6f4ef;
+}
+
+.connection-row--disabled .connection-logo,
+.connection-row--disabled .connection-name {
+  opacity: 0.55;
+  filter: grayscale(0.85);
+}
+
+.connection-row--disabled .connection-status {
+  color: #8a6a32;
+}
+
+.connection-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.connection-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.connection-name {
+  font-weight: 700;
+  color: #7a4b00;
+}
+
+.connection-status {
+  font-size: 0.8rem;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+.connections-hint {
+  font-size: 0.85rem;
+  color: #8a6a32;
+  margin: 0;
+}
+
+.connection-help {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #ffda8a;
+  border: 2px solid #c79a41;
+  color: #7a4b00;
+  font-weight: 700;
+  font-size: 0.85rem;
+  line-height: 1;
+  text-decoration: none;
+  opacity: 1;
+  filter: none;
+  transition: background 0.15s ease;
+}
+
+.connection-help:hover {
+  background: #ffcf6b;
+}

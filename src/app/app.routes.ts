@@ -15,6 +15,9 @@ import { ProfileGuard } from './profile.guard';
 import { TermsOfService } from './pages/terms-of-service/terms-of-service';
 import { PrivacyPolicy } from './pages/privacy-policy/privacy-policy';
 import { Profile } from './pages/profile/profile';
+import { Onboarding } from './pages/onboarding/onboarding';
+import { ChildLogin } from './pages/child-login/child-login';
+import { FamilyPage } from './pages/family/family-page';
 
 export const routes: Routes = [
   {
@@ -72,6 +75,26 @@ export const routes: Routes = [
     component: Dashboard,
     title: 'Athena | Dashboard',
     canActivate: [AuthGuard, ProfileGuard],
+    data: { noindex: true },
+  },
+  {
+    path: 'dashboard/family',
+    component: FamilyPage,
+    title: 'Athena | Family',
+    canActivate: [AuthGuard, ProfileGuard],
+    data: { noindex: true },
+  },
+  {
+    path: 'onboarding',
+    component: Onboarding,
+    title: 'Athena | Set up your family',
+    canActivate: [AuthGuard],
+    data: { noindex: true },
+  },
+  {
+    path: 'child-login',
+    component: ChildLogin,
+    title: 'Athena | Sign in',
     data: { noindex: true },
   },
   {

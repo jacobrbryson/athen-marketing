@@ -1,11 +1,20 @@
 <section class="dashboard">
-  <header class="dashboard-header">
+  <header class="dashboard-header" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
     <app-breadcrumb
       [label]="breadcrumbLabel()"
       [showDashboardCrumb]="true"
       [disableDashboard]="true"
       dashboardTooltip=""
     ></app-breadcrumb>
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+      <a
+        routerLink="/dashboard/family"
+        class="btn-outline"
+        style="font-size: 0.8rem; padding: 0.35rem 0.75rem;"
+        >Family</a
+      >
+      <app-profile-switcher />
+    </div>
   </header>
 
   <ng-container *ngIf="!loading(); else loadingTpl">

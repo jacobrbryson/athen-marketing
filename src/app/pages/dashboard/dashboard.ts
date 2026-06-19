@@ -1,11 +1,12 @@
 import { CommonModule, NgIf } from '@angular/common';
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { LearningCompanion } from 'src/app/pages/dashboard/sections/learning-companion/learning-companion';
 import { ProfileService } from 'src/app/services/profile';
 import { Breadcrumb } from 'src/app/shared/breadcrumb/breadcrumb';
 import { Parents } from 'src/app/pages/dashboard/sections/parents/parents';
 import { Teachers } from 'src/app/pages/dashboard/sections/teachers/teachers';
+import { ProfileSwitcher } from 'src/app/shared/profile-switcher/profile-switcher';
 
 type AdultTab = 'learning' | 'teacher' | 'parent';
 type AdultTabRequirement = 'teacher' | 'parent';
@@ -35,7 +36,7 @@ const isAdultTab = (value: string | null): value is AdultTab => {
 @Component({
 	selector: 'app-dashboard',
 	standalone: true,
-	imports: [CommonModule, NgIf, LearningCompanion, Breadcrumb, Parents, Teachers],
+	imports: [CommonModule, NgIf, RouterLink, LearningCompanion, Breadcrumb, Parents, Teachers, ProfileSwitcher],
 	templateUrl: './dashboard.html',
 	styleUrl: './dashboard.css',
 })

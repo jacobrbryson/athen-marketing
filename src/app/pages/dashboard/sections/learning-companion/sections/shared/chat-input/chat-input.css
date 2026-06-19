@@ -57,3 +57,40 @@
   background: #a5b4fc;
   cursor: not-allowed;
 }
+
+/* Push-to-talk mic button */
+.mic-button {
+  background: #eef2ff;
+  border: 2px solid #c7d2fe;
+  border-radius: 9999px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  transition: transform 0.1s, background 0.2s;
+}
+
+.mic-button:hover {
+  background: #e0e7ff;
+}
+
+.mic-button.listening {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  animation: mic-pulse 1s ease-in-out infinite;
+}
+
+@keyframes mic-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}

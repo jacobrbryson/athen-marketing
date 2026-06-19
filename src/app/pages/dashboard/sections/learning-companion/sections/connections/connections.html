@@ -1,0 +1,34 @@
+<div class="connections">
+  <p class="connections-hint" *ngIf="loading()">Checking connections…</p>
+
+  <ng-container *ngIf="!loading()">
+    <!-- Family Chores -->
+    <div
+      class="connection-row"
+      [class.connection-row--disabled]="!familyChoresStatus()?.connected"
+    >
+      <img
+        class="connection-logo"
+        [src]="asset('family-chores-logo.png')"
+        alt="Family Chores"
+        width="40"
+        height="40"
+      />
+      <div class="connection-meta">
+        <span class="connection-name">Family Chores</span>
+        <span class="connection-status">
+          {{ familyChoresStatus()?.connected ? 'Connected' : 'Not connected' }}
+        </span>
+      </div>
+      <a
+        class="connection-help"
+        href="https://family-chores.app"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Learn more about Family Chores"
+        title="Learn more about Family Chores"
+        >?</a
+      >
+    </div>
+  </ng-container>
+</div>

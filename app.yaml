@@ -1,4 +1,4 @@
-runtime: nodejs20
+runtime: nodejs22
 
 # Instance Class: F1 is typically the free tier for GAE Standard, good for low traffic.
 instance_class: F1

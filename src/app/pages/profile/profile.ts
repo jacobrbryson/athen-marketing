@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 import { formatDisplayTime } from 'src/app/shared/date-utils';
 import { GRADE_OPTIONS, formatGrade, GradeValue } from 'src/app/shared/constants/grades';
 import { ConfirmDialog } from 'src/app/shared/confirm-dialog/confirm-dialog';
+import { FamilyChoresConnectComponent } from './family-chores-connect.component';
 
 declare const grecaptcha: any;
 
@@ -34,6 +35,7 @@ declare const grecaptcha: any;
     ConfirmDialog,
     AnimatedProgressBarComponent,
     Avatar,
+    FamilyChoresConnectComponent,
   ],
   templateUrl: './profile.html',
   styleUrl: './profile.css',
